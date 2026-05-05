@@ -1,3 +1,273 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Design Token CSS Custom Properties */
+:root {
+  /* Light mode colors (default) */
+  --color-bg-base: #FFF8EE;
+  --color-bg-surface: #F6F2EE;
+  --color-text-primary: #0F2540;
+  --color-text-secondary: #3E5568;
+  --color-text-muted: #9BA3AD;
+  --color-border-default: #E6DDD6;
+  --color-brand-accent: #FFB44B;
+  --color-brand-accent-strong: #FF9A1A;
+  --color-brand-positive: #6BBF8B;
+  --color-brand-negative: #E05252;
+  --color-ink-inverse: #FFFFFF;
+
+  /* Typography */
+  --font-display: 'Aeonik Display', 'Söhne Display', system-ui, -apple-system,
+    'Segoe UI', 'Helvetica Neue', Arial;
+  --font-body: 'Geist', system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue',
+    Arial;
+  --font-mono: 'Berkeley Mono', 'JetBrains Mono', 'SFMono-Regular', Menlo,
+    monospace;
+
+  /* Spacing (8px base grid) */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+  --space-xxxl: 64px;
+
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+
+  /* Focus states */
+  --focus-ring: 3px solid var(--color-brand-accent);
+
+  /* Touch targets */
+  --touch-min: 44px;
+  --touch-cta: 48px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark mode colors */
+    --color-bg-base: #0B1220;
+    --color-bg-surface: #0F1628;
+    --color-text-primary: #E8E8E8;
+    --color-text-secondary: #B9C2CC;
+    --color-text-muted: #8592A1;
+    --color-border-default: #162033;
+    --color-brand-accent: #FFB44B;
+    --color-brand-accent-strong: #FF9A1A;
+    --color-brand-positive: #6BBF8B;
+    --color-brand-negative: #E05252;
+    --color-ink-inverse: #0B1220;
+  }
+}
+
+/* Global base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography scale */
+h1 {
+  font-family: var(--font-display);
+  font-size: 34px;
+  line-height: 40px;
+  font-weight: 600;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 600;
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+}
+
+h4 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+}
+
+p {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+small {
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+/* Links */
+a {
+  color: var(--color-brand-accent);
+  text-decoration: none;
+  transition: color 150ms ease-out;
+}
+
+a:hover {
+  color: var(--color-brand-accent-strong);
+}
+
+a:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Form elements */
+input,
+textarea,
+select {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  transition: border-color 150ms ease-out, box-shadow 150ms ease-out;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-brand-accent);
+  box-shadow: 0 0 0 3px rgba(255, 180, 75, 0.1);
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Buttons */
+button {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  min-height: var(--touch-min);
+  transition: background-color 150ms ease-out, color 150ms ease-out,
+    box-shadow 150ms ease-out;
+}
+
+button:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Primary button variant */
+.btn-primary {
+  background-color: var(--color-brand-accent);
+  color: var(--color-text-primary);
+  min-height: var(--touch-cta);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-brand-accent-strong);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Secondary button variant */
+.btn-secondary {
+  background-color: var(--color-bg-surface);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-default);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--color-border-default);
+}
+
+/* Semantic landmarks */
+header {
+  background-color: var(--color-bg-base);
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+main {
+  min-height: 100vh;
+}
+
+section {
+  padding: var(--space-lg) var(--space-md);
+}
+
+footer {
+  background-color: var(--color-bg-surface);
+  border-top: 1px solid var(--color-border-default);
+  padding: var(--space-lg) var(--space-md);
+  color: var(--color-text-secondary);
+}
+
+/* Responsive typography */
+@media (min-width: 768px) {
+  h1 {
+    font-size: 40px;
+    line-height: 48px;
+  }
+
+  h2 {
+    font-size: 36px;
+    line-height: 44px;
+  }
+
+  section {
+    padding: var(--space-xxl) var(--space-lg);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
