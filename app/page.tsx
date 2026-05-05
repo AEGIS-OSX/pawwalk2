@@ -3,6 +3,8 @@ import Hero from './components/Hero';
 import Screenshots from './components/Screenshots';
 import Testimonials from './components/Testimonials';
 import WaitlistForm from './components/WaitlistForm';
+import Footer from './components/Footer';
+import CookieBanner from './components/CookieBanner';
 
 export default function Page() {
   return (
@@ -34,6 +36,9 @@ export default function Page() {
           </p>
         </div>
       </section>
+
+      <Footer />
+      <CookieBanner />
     </>
   );
 }

@@ -47,7 +47,7 @@ export default function RootLayout({
           </header>
           <main role="main">{children}</main>
           <footer role="contentinfo">
-            {/* Footer content will be added in next phase */}
+            {/* Footer content is now in Footer component */}
           </footer>
         </AnalyticsProvider>
       </body>
