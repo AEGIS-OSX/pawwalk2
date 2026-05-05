@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react';
 import { getUTMParams } from '@/lib/utm';
 import { getDeviceType } from '@/lib/device';
+import { trackEmailSignup } from '@/lib/analytics';
 import FormMessage from './FormMessage';
 
 type MessageState = {
@@ -38,6 +39,9 @@ export default function WaitlistForm() {
           title: 'Email required',
           body: 'Please enter your email address to join the waitlist.',
         });
+        trackEmailSignup('error', {
+          error_reason: 'empty_email',
+        });
         return;
       }
 
@@ -46,6 +50,9 @@ export default function WaitlistForm() {
           type: 'error',
           title: 'Invalid email',
           body: 'Please enter a valid email address.',
+        });
+        trackEmailSignup('error', {
+          error_reason: 'invalid_email',
         });
         return;
       }
@@ -79,6 +86,9 @@ export default function WaitlistForm() {
             body: 'We saved your email and sent the app link. Open PawWalk to set your preferences and book a walk.',
             buttonText: 'Open in App',
           });
+          trackEmailSignup('success', {
+            email_domain: email.split('@')[1],
+          });
           setEmail('');
           setFirstName('');
           setIsSubmitted(true);
@@ -89,17 +99,25 @@ export default function WaitlistForm() {
             body: 'We have this address already. Check your inbox for the app link, or use the download link on the page.',
             buttonText: 'Resend link',
           });
+          trackEmailSignup('duplicate', {
+            email_domain: email.split('@')[1],
+          });
         } else if (response.status === 429) {
           setMessage({
             type: 'rate-limit',
             title: 'Slow down, please',
             body: 'Too many requests. Try again in one minute.',
           });
+          trackEmailSignup('rate_limit');
         } else {
           setMessage({
             type: 'error',
             title: 'Something went wrong',
             body: 'We couldn\'t save your email. Please try again.',
+          });
+          trackEmailSignup('error', {
+            error_reason: 'server_error',
+            status_code: response.status,
           });
         }
       } catch (error) {
@@ -107,6 +125,9 @@ export default function WaitlistForm() {
           type: 'error',
           title: 'Connection error',
           body: 'Please check your internet connection and try again.',
+        });
+        trackEmailSignup('error', {
+          error_reason: 'network_error',
         });
       } finally {
         setIsLoading(false);
@@ -190,7 +211,7 @@ export default function WaitlistForm() {
 
           {/* Privacy Text */}
           <p className="text-[13px] leading-[20px] font-[400] font-[var(--font-body)] text-[var(--color-text-muted)]">
-            We\'ll keep your email safe and never share it. Read our{' '}
+            We'll keep your email safe and never share it. Read our{' '}
             <a
               href="/privacy"
               className="text-[var(--color-brand-accent)] hover:text-[var(--color-brand-accent-strong)] transition-colors duration-150 ease-out underline"

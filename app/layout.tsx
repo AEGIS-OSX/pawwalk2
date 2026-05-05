@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import AnalyticsProvider from './components/AnalyticsProvider';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -27,6 +28,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // GA4 ID from environment; provider is defensive if missing
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
+
   return (
     <html lang="en">
       <head>
@@ -35,15 +39,17 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body>
-        <header role="banner">
-          <nav aria-label="Primary navigation">
-            {/* Header content is now in Header component */}
-          </nav>
-        </header>
-        <main role="main">{children}</main>
-        <footer role="contentinfo">
-          {/* Footer content will be added in next phase */}
-        </footer>
+        <AnalyticsProvider gaId={gaId}>
+          <header role="banner">
+            <nav aria-label="Primary navigation">
+              {/* Header content is now in Header component */}
+            </nav>
+          </header>
+          <main role="main">{children}</main>
+          <footer role="contentinfo">
+            {/* Footer content will be added in next phase */}
+          </footer>
+        </AnalyticsProvider>
       </body>
     </html>
   );

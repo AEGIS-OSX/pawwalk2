@@ -1,8 +1,23 @@
 'use client';
 
 import { handleAppStoreClick } from '@/lib/appStore';
+import { trackAppStoreClick } from '@/lib/analytics';
+import { getUTMParams } from '@/lib/utm';
 
 export default function Hero() {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // Track analytics event
+    const utmParams = getUTMParams();
+    trackAppStoreClick({
+      utm_source: utmParams.utm_source,
+      utm_medium: utmParams.utm_medium,
+      utm_campaign: utmParams.utm_campaign,
+    });
+
+    // Handle App Store navigation
+    handleAppStoreClick(e);
+  };
+
   return (
     <section
       id="hero"
@@ -29,7 +44,7 @@ export default function Hero() {
 
         {/* Primary CTA - App Store Button */}
         <button
-          onClick={handleAppStoreClick}
+          onClick={handleClick}
           className="px-[var(--space-lg)] py-[var(--space-md)] text-[16px] leading-[24px] font-[500] font-[var(--font-body)] text-[var(--color-text-primary)] bg-[var(--color-brand-accent)] rounded-[var(--radius-sm)] transition-all duration-150 ease-out hover:bg-[var(--color-brand-accent-strong)] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-[var(--color-brand-accent)] focus-visible:outline-offset-[2px] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed min-h-[var(--touch-cta)] flex items-center justify-center whitespace-nowrap"
           aria-label="Download PawWalk from App Store"
         >
