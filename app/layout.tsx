@@ -37,7 +37,7 @@ export default function RootLayout({
       <body>
         <header role="banner">
           <nav aria-label="Primary navigation">
-            {/* Header content will be added in next phase */}
+            {/* Header content is now in Header component */}
           </nav>
         </header>
         <main role="main">{children}</main>
